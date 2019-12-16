@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#####################################################
+# 					DBackup v1.0					#			
+# 													#
+# 	Script de backups de bancos de dados			#
+# 	Bancos: 	MySQL e MariaDB						#
+# 	Autor: 		Jocelim Rodrigues Abdala Junior		#
+#	E-mail:		jocelimjr2000@hotmail.com			#
+#													#
+#####################################################
+
 
 ####################################
 # CONFIGURAÇÕES
