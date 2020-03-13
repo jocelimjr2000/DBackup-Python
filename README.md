@@ -65,6 +65,13 @@
   Hdds[1]="/mmt/hdd2"
 </p>
 <p>
+  <b>circular: </b> Habilita(1) ou desabilita(0) o modo circular. Esta função faz com que selecione e formate o próximo disco sempre o percentual de uso do disco atual for igual ao configurado na opção "percent".
+</p>
+<p>Ex.: </p>
+<p>
+  Se configurado 3 discos e limitado a 90% de uso, quando o primeiro disco chegar a este percentual de uso, o segundo será selecionado e formatado. Quando ocorrer o mesmo este, o terceiro será utilizado e no último disco, será selecionado o primeiro.
+</p>
+<p>
   Lista de servidores
 </p>
 <p>
