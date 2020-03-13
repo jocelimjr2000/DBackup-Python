@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #################################################
-# 		DBackup v1.0			#			
-# 						#
-# Script de backups de bancos de dados		#
-# Bancos: 	MySQL e MariaDB			#
-# Autor: 	Jocelim Rodrigues Abdala Junior #
-# E-mail:	jocelimjr2000@hotmail.com	#
-#						#
+#                 DBackup v1.0                  #			
+#                                               #
+# Script de backups de bancos de dados          #
+# Bancos: 	MySQL e MariaDB                     #
+# Autor: 	Jocelim Rodrigues Abdala Junior     #
+# E-mail:	jocelimjr2000@hotmail.com           #
+#                                               #
 #################################################
 
 
@@ -30,6 +30,9 @@ comp_hddMarkup="/mnt/home/user/hdd.txt"
 Hdds[0]="/mnt/hdd1"
 Hdds[1]="/mnt/hdd2"
 Hdds[2]="/mnt/hdd3"
+
+# Modo circular (irá formatar o próximo hd para iniciar a gravação)
+circular=1
 
 # SERVIDORES (o [0] determina o número do servidor)
 #Server[0]         - Nome do servidor
@@ -284,13 +287,34 @@ function func_MoveDB () {
 
 
 ####################################
+# VERIFICAR PASTA TEMPORARIS
+
+# Verificar se pasta temporárias existe
+if [[ -d $folderTemporary ]] 
+then
+	# Log
+	func_ImprimirIni "Pasta temporária existente"
+else
+	mkdir --parents $folderTemporary
+	chmod -R 0777 $folderTemporary
+	# Log
+	func_ImprimirIni "Criado pasta temporária "$folderTemporary
+fi
+#
+####################################
+
+
+####################################
 # DEFINIR HD DE DESTINO
 
-# Log
-func_ImprimirIni "Verificar se arquivo de marcação existe ($comp_hddMarkup)"
+if [[ $circular == 1 ]]
+then
+	# Log
+	func_Imprimir "Verificar se arquivo de marcação existe ($comp_hddMarkup)"
+fi
 
 # Verificar se Arquivo de marcação existe
-if [[ ${#Hdds[@]} > 1 ]] && [[ -e "$comp_hddMarkup" ]];
+if [[ $circular == 1 ]] && [[ ${#Hdds[@]} > 1 ]] && [[ -e "$comp_hddMarkup" ]];
 then
 
 	# Se existir, ler arquivo e selecionar disco escrito no arquivo
