@@ -50,7 +50,17 @@
   compactType="tar.xz" - Compactar em tag.xz (mais lento, porém compacta mais)
 </p>
 <p>
-  <b>folderTemporary: </b> Pasta temporária, onde serão exportados os bancos antes da compactação.
+  <b>sepFiles: </b> Separar tabelas
+</p>
+<p>
+  Opções:
+  <br>
+  sepFiles=0 - Salva em 1 arquivo.sql
+  <br>
+  sepFiles=1 - Salva a estrutura principal (procedures, triggers, tabelas sem dados, etc.) e salva as tabelas com dados separadamente
+</p>
+<p>
+  <b>baseTmpFolder: </b> Pasta temporária, onde serão exportados os bancos antes da compactação.
 </p>
 <p>
   <b>comp_hddMarkup: </b> Arquivo de marcação, onde será salvo o HD atual.
