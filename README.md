@@ -1,4 +1,4 @@
-# DBackup v 1.0
+# DBackup v 1.1
 
 <p>
   Script simples desenvolvido para automatizar backup de bancos de dados MySQL e MariaDB em servidores Linux.
