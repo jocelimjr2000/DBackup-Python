@@ -1,3 +1,4 @@
+
 import mysql.connector
 from mysql.connector import errorcode
 import os.path
@@ -33,14 +34,14 @@ class Database:
     # Dump
     def dump(self, folder, host, user, password, database, table=None, routines=True, triggers=True, no_data=False):
         if table is None:
-            _tmpFolder = os.path.join(folder, database)
-            _tmpDatabase = database
+            tmp_folder = os.path.join(folder, database)
+            tmp_database = database
         else:
-            _tmpFolder = os.path.join(folder, table)
-            _tmpDatabase = database + ' ' + table
+            tmp_folder = os.path.join(folder, table)
+            tmp_database = database + ' ' + table
 
-        _tmpRoutines = '--routines' if routines else ''
-        _tmpTriggers = '--triggers' if triggers else ''
-        _tmpNoData = '--no-data' if no_data else ''
+        tmp_routines = '--routines' if routines else ''
+        tmp_triggers = '--triggers' if triggers else ''
+        tmp_no_data = '--no-data' if no_data else ''
 
-        os.system(f'mysqldump -h {host} -u {user} -p{password} {_tmpRoutines} {_tmpTriggers} {_tmpNoData} --single-transaction --quick {_tmpDatabase} > {_tmpFolder}.sql')
+        os.system(f'mysqldump -h {host} -u {user} -p{password} {tmp_routines} {tmp_triggers} {tmp_no_data} --single-transaction --quick {tmp_database} > {tmp_folder}.sql')

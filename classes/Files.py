@@ -1,5 +1,7 @@
+
 import json
 import os.path
+import shutil
 
 
 class Files:
@@ -14,9 +16,13 @@ class Files:
             print(">> Config.json not found")
             exit()
 
-        # Set parameters to data
-        with open(config_file) as json_data_file:
-            data = json.load(json_data_file)
+        try:
+            # Set parameters to data
+            with open(config_file) as json_data_file:
+                data = json.load(json_data_file)
+        except:
+            print(">> Invalid Config.json file")
+            exit()
 
         return data
 
@@ -25,3 +31,8 @@ class Files:
     def create_folder(folder):
         if not os.path.exists(folder):
             os.makedirs(folder)
+
+    # Delete folder
+    @staticmethod
+    def delete_folder(folder):
+        shutil.rmtree(folder, ignore_errors=True)

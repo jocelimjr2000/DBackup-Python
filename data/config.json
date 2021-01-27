@@ -1,7 +1,9 @@
 {
   "parameters": {
     "tmpFolder": "./tmp",
-    "separatedFiles": false
+    "logFolder": "./log",
+    "separatedFiles": false,
+    "compressTo" : "zip"
   },
   "servers": [
     {
@@ -11,11 +13,9 @@
       "port": 3306,
       "user": "root",
       "password": "Abd@2020",
-      "separatedFiles": false,
       "databases": [
         {
-          "name": "infinity",
-          "separatedFiles": true
+          "name": "infinity"
         }
       ]
     }

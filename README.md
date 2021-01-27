@@ -4,7 +4,9 @@ Config.json
 {
   "parameters": {                   - General definitions
     "tmpFolder": "./tmp",           * (Required) Temporary folder to dump databases
-    "separatedFiles": false         * (Required) Dump separated files (table.sql) for all servers and databases
+    "logFolder": "./log",           * (Required) Log folder
+    "separatedFiles": false,        * (Required) Dump separated files (table.sql) for all servers and databases
+    "compressTo" : "zip"            * (Opitional) The compression type for all servers and databases (Options: zip)
   },
   "servers": [                      - List servers
     {
@@ -15,13 +17,15 @@ Config.json
       "user": "root",               * (Required) User name
       "password": "",               * (Required) Password
       "separatedFiles": false,      * (Opitional) Dump separated files (table.sql) for all databases on this server
+      "compressTo" : "zip",         * (Opitional) The compression type for all databases on this server (Options: zip)
       "databases": [                - List databases (Basic)
         "db1", "db2"                * (Required) Database's name
       ],
       "databases": [                - List databases (Advanced)
         {
           "name": "infinity",       * (Required) Database's name
-          "separatedFiles": true    * (Opitional) Dump separated files (table.sql) for this database
+          "separatedFiles": true,   * (Opitional) Dump separated files (table.sql) for this database
+          "compressTo" : "zip"      * (Opitional) The compression type for this database (Options: zip)
         }
       ]
     }
