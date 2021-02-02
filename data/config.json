@@ -9,18 +9,25 @@
     {
       "name": "home",
       "prefix": "db1_",
-      "host": "127.0.0.1",
+      "host": "192.168.0.2",
       "port": 3306,
       "user": "root",
-      "password": "Abd@2020",
+      "password": "Abd@2018",
       "databases": [
         {
-          "name": "infinity"
+          "name": "ds3prova"
+        },
+        {
+          "name": "ds3prova2"
+        },
+        {
+          "name": "coisasecoisas"
         }
       ]
     }
   ],
-  "hdds": [
-    "/mnt/hdd1"
-  ]
+  "storage" : {
+    "type": "folder",
+    "to": "../teste/"
+  }
 }

@@ -2,7 +2,8 @@
 import os.path
 from datetime import datetime
 from classes.Database import Database
-from classes.Files import Files
+from classes.Folder import Folder
+from classes.Move import Move
 from classes.Compression import Compression
 
 
@@ -10,6 +11,10 @@ class Backup:
 
     # Execute backup
     def execute(self, parameters: object, server: object, database: object):
+
+        # Objects
+        comp = Compression()
+        folder = Folder()
 
         # Define export type
         separated_files = False
@@ -25,18 +30,7 @@ class Backup:
                     separated_files = True
 
         # Define the compression type
-        compress_type = None
-        if 'compressTo' in database:
-            compress_type = database['compressTo']
-        else:
-            if 'compressTo' in server:
-                compress_type = server['compressTo']
-            else:
-                if 'compressTo' in parameters:
-                    compress_type = parameters['compressTo']
-
-        # Check the compression type is valid
-        Compression.check_type(compress_type)
+        compress_type = comp.define_type(parameters, server, database)
 
         # Check DB Name
         if 'name' in database:
@@ -53,8 +47,9 @@ class Backup:
             dt_string = now.strftime("%Y_%m_%d__%H")
 
             # Define base folder
+            db_folder = server['prefix'] + database
             tmp_folder = os.path.join(parameters['tmpFolder'], dt_string)
-            base_folder = os.path.join(tmp_folder, server['prefix'] + database)
+            base_folder = os.path.join(tmp_folder, db_folder)
 
             # Export database (separated files)
             if separated_files:
@@ -63,7 +58,7 @@ class Backup:
                 folder_tables = os.path.join(base_folder, 'tables')
 
                 # Create folder
-                Files.create_folder(folder_tables)
+                folder.create_folder(folder_tables)
 
                 cursor = conn.cursor()
 
@@ -81,7 +76,7 @@ class Backup:
             # Export database (unique file)
             else:
                 # Create folder
-                Files.create_folder(base_folder)
+                folder.create_folder(base_folder)
 
                 # Dump
                 Database.dump(self, base_folder, server['host'], server['user'], server['password'], database)
@@ -90,14 +85,14 @@ class Backup:
             if compress_type is not None:
                 # Compress folder
                 if compress_type == 'zip':
-                    Compression.compress_zip(tmp_folder)
+                    comp.compress_zip(base_folder)
 
                 # Delete tmp files
-                Files.delete_folder(tmp_folder)
-
-            # Set Disk
+                folder.delete_folder(base_folder)
 
             # Move
+            # mv = Move()
+            # mv.move_to_storage(base_folder, compress_type)
 
             # End process
             conn.close()
