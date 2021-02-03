@@ -2,3 +2,5 @@
 !/tmp/.gitkeep
 /log/*
 !/log/.gitkeep
+/data/config.json
+__pycache__/
