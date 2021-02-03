@@ -1,17 +1,12 @@
 
-from classes.Thread import Thread
-from classes.Backup import Backup
-from classes.Configfile import Configfile
+import exec
+import schedule
+import time
 
-# Load config.json parameters
-config = Configfile()
-data = config.load_conf_data()
+# schedule.every().hour.do(exec.start())
+#
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
 
-# Loop Servers
-for server in data['servers']:
-
-    # Loop Databases
-    for (i, database) in enumerate(server['databases']):
-        # Create and start thread
-        tmp_thread = Thread(target=Backup.execute, args=(Backup, data['parameters'], server, database))
-        tmp_thread.start()
+exec.start()

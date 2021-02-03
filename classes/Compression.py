@@ -1,4 +1,5 @@
 
+import logging
 from classes.Configfile import Configfile
 import shutil
 import os.path
@@ -8,7 +9,9 @@ class Compression:
 
     # Define the compression type
     def define_type(self, parameters, server, database):
+        compress_list = ['zip']
         compress_type = None
+
         if 'compressTo' in database and database['compressTo'] is not False:
             compress_type = database['compressTo']
         else:
@@ -18,22 +21,13 @@ class Compression:
                 if 'compressTo' in parameters and parameters['compressTo'] is not False:
                     compress_type = parameters['compressTo']
 
-        if compress_type is not None:
-            self.check_type(compress_type)
+        if compress_type is not None and compress_type not in compress_list:
+            compress_type = None
 
         return compress_type
 
-    # Check type
-    def check_type(self, compress_type):
-        compress_list = ['zip']
-
-        # Check the compression type
-        if compress_type is not None and compress_type not in compress_list:
-            print('>> The compression type is invalid')
-            exit()
-
     # Compress to ZIP
-    def compress_zip(self, folder):
+    def compress_zip(self, server, folder, database):
         # Conf data
         config = Configfile()
         conf_data = config.load_conf_data()
@@ -45,4 +39,10 @@ class Compression:
         file_final = os.path.join(conf_data['parameters']['tmpFolder'], file_name[-2], file_name[-1])
 
         # Compress
-        shutil.make_archive(file_final, 'zip', folder)
+        try:
+            shutil.make_archive(file_final, 'zip', folder)
+            # Log
+            logging.info("Server %s Database %s: Compressing completed", server['name'], database)
+        except:
+            # Log
+            logging.error("Server %s Database %s: Compressing error", server['name'], database)

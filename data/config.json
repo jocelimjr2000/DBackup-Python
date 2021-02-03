@@ -2,7 +2,7 @@
   "parameters": {
     "tmpFolder": "./tmp",
     "logFolder": "./log",
-    "separatedFiles": false,
+    "separatedFiles": true,
     "compressTo" : "zip"
   },
   "servers": [
