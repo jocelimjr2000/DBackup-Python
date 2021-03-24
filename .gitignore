@@ -109,6 +109,8 @@ fabric.properties
 
 /tmp/*
 !/tmp/.gitkeep
+/files/*
+!/files/.gitkeep
 /log/*
 !/log/.gitkeep
 /data/config.json

@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from classes.Thread import Thread
 from classes.Backup import Backup
 from classes.Configfile import Configfile
@@ -6,31 +6,49 @@ import logging.config
 
 
 class Service:
+    __config = None
+    __ref = None
 
     def __init__(self):
+        # Load config.json parameters
+        self.__config = Configfile().load_conf_data()
+
+        # Set reference (Date and Hour)
+        now = datetime.now()
+        self.__ref = now.strftime("%Y_%m_%d__%H")
+
         # Configure logging
-        logging.config.fileConfig('./logging.conf')
+        log_folder = self.__config['parameters']['logFolder']
+        file_name = self.__ref + '.log'
+
+        if not log_folder[0:-1] == '/':
+            log_folder = log_folder + '/'
+
+        logging.basicConfig(
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            filename=log_folder + file_name,
+            encoding='utf-8',
+            level=logging.DEBUG,
+            datefmt='%d/%m/%Y %H:%I:%S'
+        )
 
     def start(self):
         # Log
         logging.info('Start process')
 
-        # Load config.json parameters
-        config = Configfile()
-        data = config.load_conf_data()
-
         threads_list = []
 
-        # Loop Servers
-        for server in data['servers']:
+        # Loop Servers and push on threads list
+        for server in self.__config['servers']:
 
             # Create and Start Threads
             for (i, database) in enumerate(server['databases']):
                 tmp_thread = Thread(target=Backup.execute, name=server['name'] + "|" + database['name'],
-                                    args=(Backup, data['parameters'], server, database))
+                                    args=(Backup, self.__config['parameters'], server, database, self.__ref))
                 threads_list.append(tmp_thread)
                 tmp_thread.start()
 
+        # Start all threads
         for t in threads_list:
             t.join()
 

@@ -11,7 +11,7 @@ import logging
 class Backup:
 
     # Execute backup
-    def execute(self, parameters: object, server: object, database: object):
+    def execute(self, parameters: object, server: object, database: object, dt_string: datetime):
         # Set DB Name
         if 'name' in database:
             database_name = database['name']
@@ -46,10 +46,6 @@ class Backup:
 
         # Check Connection
         if conn:
-
-            # Date and Hour
-            now = datetime.now()
-            dt_string = now.strftime("%Y_%m_%d__%H")
 
             # Define base folder
             db_folder = server['prefix'] + database_name
