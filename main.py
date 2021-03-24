@@ -1,5 +1,5 @@
 
-import exec
+from classes.Service import Service
 import schedule
 import time
 
@@ -9,4 +9,5 @@ import time
 #     schedule.run_pending()
 #     time.sleep(1)
 
-exec.start()
+sv = Service()
+sv.start()
